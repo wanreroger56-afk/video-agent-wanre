@@ -718,15 +718,22 @@ app.get('/vid/:id', (req, res) => {
 
 let isProcessing = false;
 let consecutiveErrors = 0;
+let pollCount = 0;
 
 async function poll() {
+  pollCount++;
   try {
-    const res = await fetch(`${GREEN_API_URL}/receiveNotification/${GREEN_API_TOKEN}?receiveTimeout=5`);
+    const url = `${GREEN_API_URL}/receiveNotification/${GREEN_API_TOKEN}?receiveTimeout=5`;
+    if (pollCount <= 3 || pollCount % 30 === 0) {
+      console.log(`Poll #${pollCount} → ${url.substring(0, 60)}...`);
+    }
+    const res = await fetch(url);
 
     if (!res.ok) {
+      const errBody = await res.text().catch(() => '');
       consecutiveErrors++;
       if (consecutiveErrors === 1 || consecutiveErrors % 30 === 0) {
-        console.error(`Poll: Green API HTTP ${res.status} (erreur #${consecutiveErrors} — vérifie le token et redémarre l'instance sur console.green-api.com)`);
+        console.error(`Poll: Green API HTTP ${res.status} "${errBody.substring(0, 100)}" (erreur #${consecutiveErrors})`);
       }
       return;
     }
@@ -734,8 +741,12 @@ async function poll() {
     const text = await res.text();
     if (!text || text === 'null') {
       consecutiveErrors = 0;
+      if (pollCount <= 3 || pollCount % 30 === 0) {
+        console.log(`Poll #${pollCount} → rien en attente`);
+      }
       return;
     }
+    console.log(`Poll #${pollCount} → notification reçue: ${text.substring(0, 100)}...`);
 
     let data;
     try { data = JSON.parse(text); } catch {
