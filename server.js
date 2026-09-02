@@ -12,7 +12,8 @@ const GREEN_API_TOKEN = process.env.GREEN_API_TOKEN;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 const ALLOWED_NUMBERS = (process.env.ALLOWED_NUMBERS || '').split(',').map(n => n.trim()).filter(Boolean);
-const GREEN_API_URL = `https://7107.api.greenapi.com/waInstance${GREEN_API_INSTANCE}`;
+const GREEN_API_BASE = process.env.GREEN_API_BASE || 'https://7105.api.greenapi.com';
+const GREEN_API_URL = `${GREEN_API_BASE}/waInstance${GREEN_API_INSTANCE}`;
 
 // ========== WHATSAPP ==========
 
