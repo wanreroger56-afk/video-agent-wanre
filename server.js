@@ -235,8 +235,12 @@ Chaque prompt Sora DOIT contenir :
 4. LA CINÉMATIQUE : mouvement caméra, éclairage dramatique, ralenti, profondeur de champ, style pub luxe internationale
 
 === NARRATION (EN FRANÇAIS, pour voix off TTS) ===
-Chaque scène a aussi une narration française (voix off par dessus la vidéo).
-La voix off accompagne l'image. Court et percutant.
+La narration est une VOIX OFF PUBLICITAIRE — PAS une lecture scolaire.
+Écris comme un SPOT RADIO/TV : fluide, rythmé, avec de l'énergie et de l'émotion.
+JAMAIS de phrases sèches ou isolées. Chaque narration doit COULER naturellement,
+comme si un speaker pub professionnel la disait d'une traite avec passion.
+Utilise des liaisons naturelles ("et là...", "imagine...", "tu vas voir...").
+Ajoute du RYTHME avec des virgules, des points de suspension... et de l'exclamation!
 
 Réponds UNIQUEMENT en JSON :
 {
@@ -478,8 +482,8 @@ async function videasteIA(motionPrompt, sceneNum) {
 // ═══════════════════════════════════════════════════════════
 
 async function voixIA(texte, genre) {
-  const voice = genre === 'homme' ? 'onyx' : 'nova';
-  console.log(`[5/6] VOIX IA — OpenAI TTS (${voice})...`);
+  const voice = genre === 'homme' ? 'echo' : 'shimmer';
+  console.log(`[5/6] VOIX IA — OpenAI TTS HD (${voice})...`);
 
   try {
     const res = await fetch('https://api.openai.com/v1/audio/speech', {
@@ -493,7 +497,7 @@ async function voixIA(texte, genre) {
         input: texte,
         voice: voice,
         response_format: 'mp3',
-        speed: 1.0
+        speed: 1.05
       })
     });
 
