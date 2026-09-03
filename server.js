@@ -159,7 +159,7 @@ Write 100-150 words. Be so precise that an AI video generator can recreate this 
 
 // ═══════════════════════════════════════════════════════════
 // AGENT 2 : SCÉNARISTE IA (OpenAI GPT)
-// Script AIDA 3 scènes — prompts Sora + narration TTS
+// Script AIDA 3 scènes — textes overlay + narration TTS
 // ═══════════════════════════════════════════════════════════
 
 async function scenaristeIA(analyse) {
@@ -178,72 +178,41 @@ async function scenaristeIA(analyse) {
       messages: [
         {
           role: 'system',
-          content: `Tu es un GÉNIE DE LA PUBLICITÉ et un RÉALISATEUR DE CLIPS COMMERCIAUX.
-Tu penses comme David Ogilvy, tu filmes comme les pubs Dior, Chanel, Nike.
-
-TON OBJECTIF : créer une PUB VIDÉO PROFESSIONNELLE qui BLOQUE LE SCROLL.
-PAS une personne assise qui parle. Une VRAIE PUB : le/la présentateur(trice) TIENT le produit, le MONTRE, l'UTILISE, le PRÉSENTE comme dans une pub TV.
+          content: `Tu es un GÉNIE DE LA PUBLICITÉ spécialisé en spots vidéo pour l'Afrique de l'Ouest.
 
 Voici l'analyse stratégique du Directeur Marketing :
 ${JSON.stringify(analyse, null, 2)}
 
-=== LE PRÉSENTATEUR ===
-Genre : ${genre}
-${genre === 'femme' ? 'Beautiful elegant African woman' : 'Handsome confident African man'}
-Le/la présentateur(trice) INTERAGIT avec le produit : tient, montre, utilise, présente, manipule.
-
 === TON ARSENAL DE SCROLL-STOPPERS ===
 - Pattern Interrupt, Curiosity Gap, Bold Claim, Interpellation directe
-- FOMO, Preuve sociale, Contraste avant/après, Storytelling sensoriel
+- FOMO, Preuve sociale, Contraste avant/après
 
 EXPRESSIONS BURKINA :
-"Wakat la!", "Ça va te plaire dèh!", "Tu vas briller!", "Faut pas dormir dessus!", "Tes copines vont être jalouses!"
+"Wakat la!", "Ça va te plaire dèh!", "Tu vas briller!", "Faut pas dormir dessus!"
 
-=== MÉTHODE AIDA — 3 SCÈNES — 15-30 SECONDES ===
-Chaque scène = 8 secondes de vidéo Sora.
-Total : 24 secondes. Format parfait pour TikTok/Instagram/Facebook.
+=== MÉTHODE AIDA — 3 SCÈNES — 24 SECONDES ===
+Chaque scène = 8 secondes. La photo du produit sera animée avec des effets zoom/pan professionnels.
+Tu dois fournir les TEXTES qui s'affichent à l'écran par-dessus l'image animée.
 
-🅰️ SCÈNE 1 — ATTENTION (8 secondes)
-OUVERTURE CINÉMATIQUE. Le produit apparaît de manière spectaculaire.
-Le/la présentateur(trice) PREND le produit, le RÉVÈLE au spectateur.
-Ex parfum : "mains élégantes qui saisissent le flacon, le soulèvent vers la lumière"
-Ex vêtement : "la personne apparaît en portant le vêtement, marche vers la caméra"
-Ex cosmétique : "la personne ouvre le produit, révèle la texture, commence à l'appliquer"
+🅰️ SCÈNE 1 — ATTENTION (8s) : Phrase choc pour bloquer le scroll
+🔥 SCÈNE 2 — DÉSIR (8s) : Bénéfices et avantages qui créent l'envie
+💥 SCÈNE 3 — ACTION (8s) : Appel à l'action urgent
 
-🔥 SCÈNE 2 — DÉSIR (8 secondes)
-Le/la présentateur(trice) UTILISE le produit. CETTE SCÈNE DOIT BLOQUER LE SCROLL.
-Ex parfum : "she gracefully sprays the fragrance mist into the golden air, the mist catches the light, she smiles with confidence and satisfaction"
-Ex vêtement : "he/she walks confidently wearing the outfit, fabric flows in cinematic slow motion, turns to show the back"
-Ex cosmétique : "she presents the product close to camera, shows the rich texture, her skin glows radiantly"
-MONTRER la transformation, le plaisir, le désir. Rendre le spectateur JALOUX.
+=== TEXTES OVERLAY (affichés à l'écran) ===
+- "text_top" : texte en haut (court, 3-6 mots, MAJUSCULES, accrocheur)
+- "text_bottom" : texte en bas (bénéfice ou CTA, 3-8 mots)
+Ces textes doivent être LISIBLES, PERCUTANTS, en FRANÇAIS.
 
-💥 SCÈNE 3 — ACTION (8 secondes)
-Plan final MÉMORABLE. Le/la présentateur(trice) PRÉSENTE le produit face caméra.
-Pose confiante et puissante, produit bien visible, regard caméra direct.
-Ex : "she holds the product toward camera with pride, powerful confident smile, dramatic slow zoom on the product, golden particles in the air"
-
-=== STYLE D'ÉCRITURE DES video_motion (TRÈS IMPORTANT) ===
-Les prompts sont envoyés à un générateur vidéo IA. Utilise un style de BRIEF DE RÉALISATION PUBLICITAIRE professionnel :
-- Décris comme un directeur artistique de Dior ou Nike décrirait un storyboard
-- Utilise des termes de cinéma : "slow motion", "shallow depth of field", "golden hour lighting", "cinematic dolly shot"
-- Pour les interactions produit : "gracefully presents", "elegantly reveals", "confidently displays", "showcases the product"
-- Pour les parfums : "sprays fragrance mist into the air" (dans l'air, PAS sur la peau)
-- Le/la présentateur(trice) est toujours HABILLÉ(E) élégamment
-
-=== FORMAT DE CHAQUE video_motion (EN ANGLAIS, 50+ MOTS) ===
-Chaque prompt Sora DOIT contenir :
-1. LE/LA PRÉSENTATEUR(TRICE) : ${genre === 'femme' ? 'beautiful elegant African woman in stunning designer dress' : 'handsome confident African man in sharp designer suit'}, expression, attitude
-2. LE PRODUIT EXACT : décris PRÉCISÉMENT forme, couleur, taille, matériaux, emballage (d'après l'analyse)
-3. L'INTERACTION CAPTIVANTE : ce que la personne FAIT avec le produit de manière spectaculaire
-4. LA CINÉMATIQUE : mouvement caméra, éclairage dramatique, ralenti, profondeur de champ, style pub luxe internationale
-
-=== NARRATION (EN FRANÇAIS, pour voix off TTS) ===
-La narration est une VOIX OFF PUBLICITAIRE — PAS une lecture scolaire.
-Écris comme un SPOT RADIO/TV : fluide, rythmé, avec de l'énergie et de l'émotion.
-JAMAIS de phrases sèches ou isolées. Chaque narration doit COULER naturellement,
-comme si un speaker pub professionnel la disait d'une traite avec passion.
-Utilise des liaisons naturelles ("et là...", "imagine...", "tu vas voir...").
+=== NARRATION (voix off TTS, en français) ===
+Voix off PUBLICITAIRE fluide et rythmée comme un spot radio/TV.
+JAMAIS de phrases sèches. Utilise des liaisons naturelles.
 Ajoute du RYTHME avec des virgules, des points de suspension... et de l'exclamation!
+
+=== EFFET VISUEL PAR SCÈNE ===
+- "effect" : choisir parmi "zoom_in", "zoom_out", "pan_left", "pan_right"
+  Scène 1 → "zoom_in" (découverte du produit, on se rapproche)
+  Scène 2 → "pan_right" ou "pan_left" (on explore le produit)
+  Scène 3 → "zoom_out" (on révèle l'ensemble, plan final)
 
 Réponds UNIQUEMENT en JSON :
 {
@@ -255,26 +224,32 @@ Réponds UNIQUEMENT en JSON :
   "scenes": [
     {
       "nom": "ATTENTION",
-      "video_motion": "EN ANGLAIS, 50+ mots. Décris la scène visuelle : le/la présentateur(trice) + le produit EXACT + l'interaction + la cinématique.",
-      "narration": "EN FRANÇAIS, 10-18 mots. Voix off percutante pour cette scène."
+      "text_top": "TEXTE CHOC EN HAUT (3-6 mots)",
+      "text_bottom": "sous-titre accrocheur (3-8 mots)",
+      "effect": "zoom_in",
+      "narration": "EN FRANÇAIS, 10-18 mots. Voix off percutante."
     },
     {
       "nom": "DÉSIR",
-      "video_motion": "EN ANGLAIS, 50+ mots. Le/la présentateur(trice) UTILISE le produit. Transformation visible.",
+      "text_top": "BÉNÉFICE CLÉ (3-6 mots)",
+      "text_bottom": "détail avantage (3-8 mots)",
+      "effect": "pan_right",
       "narration": "EN FRANÇAIS, 15-25 mots. Voix off qui crée le désir."
     },
     {
       "nom": "ACTION",
-      "video_motion": "EN ANGLAIS, 50+ mots. Plan final : présentateur(trice) + produit face caméra. Mémorable.",
+      "text_top": "APPEL À L'ACTION (3-6 mots)",
+      "text_bottom": "urgence / contact (3-8 mots)",
+      "effect": "zoom_out",
       "narration": "EN FRANÇAIS, 10-18 mots. Voix off CTA + FOMO."
     }
   ]
 }`
         },
-        { role: 'user', content: `Crée une PUB VIDÉO PROFESSIONNELLE AIDA en 3 SCÈNES (24 secondes) pour : ${analyse.produit}\n\nLe/la présentateur(trice) (${genre}) doit TENIR, MONTRER et UTILISER le produit — comme une VRAIE pub Dior/Nike/Apple.\nChaque scène = prompt vidéo Sora (anglais, 50+ mots) + narration voix off (français).\nDécris le produit PRÉCISÉMENT dans chaque prompt Sora : ${analyse.produit}` }
+        { role: 'user', content: `Crée les textes d'une PUB VIDÉO AIDA en 3 SCÈNES (24 secondes) pour : ${analyse.produit}\n\nLa vidéo utilisera la VRAIE photo du produit avec des effets visuels pro (zoom, pan).\nFournis les textes overlay percutants + narration voix off pour chaque scène.` }
       ],
       temperature: 0.9,
-      max_tokens: 2000,
+      max_tokens: 1000,
       response_format: { type: 'json_object' }
     })
   });
@@ -286,9 +261,8 @@ Réponds UNIQUEMENT en JSON :
   console.log('  Angle:', script.angle || 'N/A');
   console.log(`  Scènes: ${script.scenes?.length || 0}`);
   script.scenes?.forEach((s, i) => {
-    console.log(`    ${i + 1}. ${s.nom}:`);
-    console.log(`       Vidéo: ${s.video_motion?.substring(0, 80)}...`);
-    console.log(`       Voix: ${s.narration?.substring(0, 60)}...`);
+    console.log(`    ${i + 1}. ${s.nom}: [${s.text_top}] / [${s.text_bottom}]`);
+    console.log(`       Effet: ${s.effect} | Voix: ${s.narration?.substring(0, 60)}...`);
   });
   return script;
 }
@@ -356,127 +330,70 @@ async function createurImages(prompt) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// AGENT 4 : VIDÉASTE IA (OpenAI Sora)
-// Génère des vidéos avec PERSONNE + PRODUIT
+// AGENT 4 : ANIMATEUR IA (FFmpeg)
+// Anime la photo produit avec effets Ken Burns + texte overlay
 // ═══════════════════════════════════════════════════════════
 
-async function reformulerPrompt(prompt) {
-  console.log('  [REFORMULATION] Réécriture du prompt pour passer la modération...');
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${OPENAI_API_KEY}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o-mini',
-      messages: [
-        {
-          role: 'system',
-          content: `Rewrite this AI video generation prompt to pass content moderation while keeping it EQUALLY captivating and professional.
-
-Rules:
-- Keep the SAME visual scene, product, and presenter
-- Keep it cinematic, luxurious, scroll-stopping
-- Replace any body contact (spraying on skin, applying on body) with elegant product presentation (spraying mist into golden light, presenting the texture)
-- Replace sensual/intimate language with confident/powerful language
-- Keep all product details EXACTLY the same
-- Keep the same energy and impact
-- Output ONLY the rewritten prompt, nothing else`
-        },
-        { role: 'user', content: prompt }
-      ],
-      max_tokens: 500
-    })
-  });
-  const data = await res.json();
-  if (!res.ok) return prompt;
-  const newPrompt = data.choices[0].message.content;
-  console.log('  Reformulé:', newPrompt.substring(0, 120) + '...');
-  return newPrompt;
+function escapeFFmpegText(text) {
+  return text.replace(/\\/g, '\\\\').replace(/'/g, "'\\''").replace(/:/g, '\\:').replace(/\[/g, '\\[').replace(/\]/g, '\\]').replace(/%/g, '%%');
 }
 
-async function soraGenerate(prompt, label) {
-  const createRes = await fetch('https://api.openai.com/v1/videos', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${OPENAI_API_KEY}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      model: 'sora-2',
-      prompt: prompt,
-      size: '720x1280',
-      seconds: '8'
-    })
-  });
+async function animerScene(imagePath, scene, sceneNum, duration) {
+  const label = `Scène ${sceneNum}`;
+  console.log(`[4/6] ANIMATEUR — ${label} (${scene.effect}, ${duration}s)...`);
 
-  const createData = await createRes.json();
+  const tmpDir = os.tmpdir();
+  const ts = Date.now();
+  const output = path.join(tmpDir, `anim_${ts}_${sceneNum}.mp4`);
+  const W = 720, H = 1280;
 
-  if (!createRes.ok) {
-    const errMsg = createData.error?.message || `erreur ${createRes.status}`;
-    if (errMsg.toLowerCase().includes('moderation') || errMsg.toLowerCase().includes('blocked') || errMsg.toLowerCase().includes('safety')) {
-      return { blocked: true, error: errMsg };
-    }
-    throw new Error(`Sora: ${errMsg}`);
+  const effect = scene.effect || 'zoom_in';
+  let zoompan = '';
+  switch (effect) {
+    case 'zoom_in':
+      zoompan = `zoompan=z='min(zoom+0.0015,1.4)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=${duration * 25}:s=${W}x${H}:fps=25`;
+      break;
+    case 'zoom_out':
+      zoompan = `zoompan=z='if(eq(on,1),1.4,max(zoom-0.0015,1.0))':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=${duration * 25}:s=${W}x${H}:fps=25`;
+      break;
+    case 'pan_left':
+      zoompan = `zoompan=z='1.2':x='if(eq(on,1),iw/4,max(x-1,0))':y='ih/2-(ih/zoom/2)':d=${duration * 25}:s=${W}x${H}:fps=25`;
+      break;
+    case 'pan_right':
+      zoompan = `zoompan=z='1.2':x='if(eq(on,1),0,min(x+1,iw/4))':y='ih/2-(ih/zoom/2)':d=${duration * 25}:s=${W}x${H}:fps=25`;
+      break;
+    default:
+      zoompan = `zoompan=z='min(zoom+0.0015,1.4)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=${duration * 25}:s=${W}x${H}:fps=25`;
   }
 
-  const videoId = createData.id;
-  console.log(`  Job: ${videoId} — Génération (~2-5 min)...`);
+  const topText = escapeFFmpegText(scene.text_top || '');
+  const bottomText = escapeFFmpegText(scene.text_bottom || '');
 
-  for (let i = 0; i < 60; i++) {
-    await new Promise(r => setTimeout(r, 10000));
+  const drawTop = topText
+    ? `drawtext=text='${topText}':fontsize=52:fontcolor=white:borderw=3:bordercolor=black:x=(w-text_w)/2:y=h*0.12:enable='between(t,0.3,${duration - 0.3})'`
+    : '';
+  const drawBottom = bottomText
+    ? `drawtext=text='${bottomText}':fontsize=40:fontcolor=white:borderw=2:bordercolor=black:x=(w-text_w)/2:y=h*0.82:enable='between(t,0.5,${duration - 0.3})'`
+    : '';
 
-    const pollRes = await fetch(`https://api.openai.com/v1/videos/${videoId}`, {
-      headers: { 'Authorization': `Bearer ${OPENAI_API_KEY}` }
-    });
-    const pollData = await pollRes.json();
+  let filters = zoompan;
+  if (drawTop) filters += ',' + drawTop;
+  if (drawBottom) filters += ',' + drawBottom;
+  filters += `,fade=t=in:st=0:d=0.5,fade=t=out:st=${duration - 0.5}:d=0.5`;
 
-    if (pollData.status === 'completed') {
-      console.log(`  ${label} PRÊTE!`);
-      const dlRes = await fetch(`https://api.openai.com/v1/videos/${videoId}/content`, {
-        headers: { 'Authorization': `Bearer ${OPENAI_API_KEY}` }
-      });
-      if (!dlRes.ok) throw new Error('Sora: téléchargement échoué');
-      const videoBuffer = Buffer.from(await dlRes.arrayBuffer());
-      console.log(`  ${(videoBuffer.length / 1024 / 1024).toFixed(1)} MB`);
-      return { blocked: false, buffer: videoBuffer };
-    }
+  const cmd = `ffmpeg -y -loop 1 -i "${imagePath}" -vf "${filters}" -t ${duration} -c:v libx264 -preset fast -crf 23 -pix_fmt yuv420p -r 25 "${output}"`;
 
-    if (pollData.status === 'failed') {
-      const failMsg = pollData.error?.message || 'échoué';
-      if (failMsg.toLowerCase().includes('moderation') || failMsg.toLowerCase().includes('blocked') || failMsg.toLowerCase().includes('safety')) {
-        return { blocked: true, error: failMsg };
-      }
-      throw new Error(`Sora ${label}: ${failMsg}`);
-    }
-
-    if (i % 6 === 0 && i > 0) {
-      console.log(`  ... ${Math.round(i * 10 / 60)} min (${pollData.status})`);
-    }
+  try {
+    execSync(cmd, { timeout: 60000, stdio: 'pipe' });
+    const buf = fs.readFileSync(output);
+    console.log(`  ${label} OK (${(buf.length / 1024).toFixed(0)} KB)`);
+    return buf;
+  } catch (err) {
+    console.error(`  ${label} FFmpeg erreur:`, err.stderr?.toString()?.substring(0, 300) || err.message);
+    throw new Error(`Animation ${label} échouée`);
+  } finally {
+    try { fs.unlinkSync(output); } catch {}
   }
-
-  throw new Error(`Sora ${label}: timeout 10min`);
-}
-
-async function videasteIA(motionPrompt, sceneNum) {
-  const label = sceneNum ? `Scène ${sceneNum}` : 'Vidéo';
-  console.log(`[SORA] ${label} — génération...`);
-  console.log(`  Prompt: ${motionPrompt.substring(0, 150)}...`);
-
-  let result = await soraGenerate(motionPrompt, label);
-
-  if (result.blocked) {
-    console.log(`  ${label} BLOQUÉE par modération — reformulation auto...`);
-    const newPrompt = await reformulerPrompt(motionPrompt);
-    result = await soraGenerate(newPrompt, `${label} (retry)`);
-
-    if (result.blocked) {
-      throw new Error(`Sora ${label}: bloqué même après reformulation`);
-    }
-  }
-
-  return result.buffer;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -632,6 +549,15 @@ async function monteurIA(videoBuffers, audioBuffer) {
 let imageStore = {};
 let videoStore = {};
 
+async function downloadImage(url) {
+  console.log('  Téléchargement image...');
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Téléchargement image échoué: ${res.status}`);
+  const buf = Buffer.from(await res.arrayBuffer());
+  console.log(`  Image: ${(buf.length / 1024).toFixed(0)} KB`);
+  return buf;
+}
+
 async function handleMessage(chatId, userText, clientImage) {
   try {
     console.log(`\n${'='.repeat(55)}`);
@@ -641,67 +567,76 @@ async function handleMessage(chatId, userText, clientImage) {
     console.log(`  Image: ${clientImage ? 'OUI' : 'NON'}`);
     console.log('='.repeat(55));
 
+    if (!clientImage) {
+      await sendText(chatId,
+        '📸 *Envoyez une photo de votre produit* avec une description pour créer votre pub vidéo.\n\n' +
+        'Exemple : envoyez la photo + "Parfum de luxe pour femme, 50ml, 15000 FCFA"');
+      return;
+    }
+
     await sendText(chatId,
       '🎬 *STUDIO PUB IA — Wanre AI Solutions*\n\n' +
-      (clientImage ? '👁️ Vision IA analyse votre produit...\n' : '') +
+      '👁️ Vision IA analyse votre produit...\n' +
       '🧠 Directeur IA — stratégie marketing...\n' +
       '✍️ Scénariste IA — 3 scènes AIDA...\n' +
-      '🎥 Sora — 3 vidéos pro en parallèle...\n' +
+      '🎥 Animation pro de votre photo...\n' +
       '🎙️ Voix IA — narration française...\n' +
       '🎬 Monteur IA — assemblage final...\n\n' +
-      '⏳ ~5-8 min, votre spot 24s arrive...');
+      '⏳ ~1-2 min, votre spot 24s arrive...');
 
-    // AGENT VISION : Si image client → description ultra-précise du produit
-    let productVision = null;
-    if (clientImage) {
-      productVision = await visionIA(clientImage);
+    // Télécharger l'image du client
+    const imgBuffer = await downloadImage(clientImage);
+    const tmpDir = os.tmpdir();
+    const ts = Date.now();
+    const imgPath = path.join(tmpDir, `product_${ts}.jpg`);
+    fs.writeFileSync(imgPath, imgBuffer);
+
+    // Redimensionner l'image en 720x1280 (portrait 9:16) pour FFmpeg
+    const imgResized = path.join(tmpDir, `product_${ts}_resized.jpg`);
+    try {
+      execSync(
+        `ffmpeg -y -i "${imgPath}" -vf "scale=720:1280:force_original_aspect_ratio=increase,crop=720:1280,eq=brightness=0.03:saturation=1.2" -q:v 2 "${imgResized}"`,
+        { timeout: 30000, stdio: 'pipe' }
+      );
+      console.log('  Image redimensionnée 720x1280');
+    } catch {
+      execSync(
+        `ffmpeg -y -i "${imgPath}" -vf "scale=720:1280:force_original_aspect_ratio=increase,crop=720:1280" -q:v 2 "${imgResized}"`,
+        { timeout: 30000, stdio: 'pipe' }
+      );
     }
 
-    // AGENT 1 : DIRECTEUR (enrichi avec la description Vision si disponible)
+    // AGENT VISION : Description du produit
+    const productVision = await visionIA(clientImage);
+
+    // AGENT 1 : DIRECTEUR
     let directeurInput = userText;
     if (productVision) {
-      directeurInput = `${userText}\n\n=== DESCRIPTION VISUELLE EXACTE DU PRODUIT (d'après la photo envoyée) ===\n${productVision}`;
+      directeurInput = `${userText}\n\n=== DESCRIPTION VISUELLE EXACTE DU PRODUIT (d'après la photo) ===\n${productVision}`;
     }
-    const analyse = await directeurIA(directeurInput, !!clientImage);
+    const analyse = await directeurIA(directeurInput, true);
 
     // AGENT 2 : SCÉNARISTE
     const script = await scenaristeIA(analyse);
-
-    // ENRICHIR chaque prompt Sora avec la description EXACTE du produit
     const scenes = script.scenes || [];
     if (scenes.length === 0) throw new Error('Aucune scène générée');
 
-    const produitDesc = productVision || analyse.produit;
-    scenes.forEach((s, i) => {
-      s.video_motion = s.video_motion +
-        `. CRITICAL — The product in every frame must match this EXACT description: ${produitDesc}. ` +
-        'Reproduce this specific product faithfully in shape, color, size, and materials. ' +
-        'The presenter holds THIS exact product. Professional luxury TV commercial, shallow DOF, warm cinematic lighting, no text no watermarks.';
-      console.log(`  Scène ${i + 1} prompt enrichi (${s.video_motion.length} chars)`);
-    });
-
-    console.log(`[4/6] VIDÉASTE IA — ${scenes.length} scènes Sora en parallèle...`);
-
-    const results = await Promise.allSettled(
-      scenes.map((scene, i) =>
-        videasteIA(scene.video_motion, i + 1)
-      )
-    );
-
+    // AGENT 4 : ANIMATION (FFmpeg — Ken Burns + texte overlay)
+    console.log(`[4/6] ANIMATEUR — ${scenes.length} scènes à partir de la photo produit...`);
     const videoBuffers = [];
-    results.forEach((r, i) => {
-      if (r.status === 'fulfilled') {
-        videoBuffers.push(r.value);
-        console.log(`  Scène ${i + 1}: OK`);
-      } else {
-        console.error(`  Scène ${i + 1}: ÉCHOUÉE — ${r.reason?.message}`);
+    for (let i = 0; i < scenes.length; i++) {
+      try {
+        const buf = await animerScene(imgResized, scenes[i], i + 1, 8);
+        videoBuffers.push(buf);
+      } catch (err) {
+        console.error(`  Scène ${i + 1} échouée:`, err.message);
       }
-    });
+    }
 
-    if (videoBuffers.length === 0) throw new Error('Aucune scène vidéo générée');
+    if (videoBuffers.length === 0) throw new Error('Aucune scène animée générée');
     console.log(`  ${videoBuffers.length}/${scenes.length} scènes réussies`);
 
-    // AGENT 5 : VOIX OFF (TTS — voix adaptée au genre du présentateur)
+    // AGENT 5 : VOIX OFF
     const narrationFull = scenes.map(s => s.narration).join(' ');
     const genre = analyse.presenter_genre || 'femme';
     const audioBuffer = await voixIA(narrationFull, genre);
@@ -731,13 +666,16 @@ async function handleMessage(chatId, userText, clientImage) {
       `🤖 Powered by Wanre AI Solutions`;
 
     await sendVideo(chatId, videoUrl, caption);
-
     console.log('\n✅ PUB LIVRÉE!\n');
+
+    // Nettoyage
+    try { fs.unlinkSync(imgPath); } catch {}
+    try { fs.unlinkSync(imgResized); } catch {}
 
   } catch (error) {
     console.error('❌ ERREUR:', error.message);
     await sendText(chatId,
-      '⚠️ Erreur: ' + error.message + '\n\nRéessayez avec plus de détails.');
+      '⚠️ Erreur: ' + error.message + '\n\nRéessayez avec une photo + description de votre produit.');
   }
 }
 
@@ -861,30 +799,29 @@ async function clearQueue() {
 // ========== DÉMARRAGE ==========
 
 app.get('/', (req, res) => res.json({
-  version: 'Studio Pub IA — Wanre AI Solutions',
+  version: 'Studio Pub IA v2 — Wanre AI Solutions',
   pipeline: {
     vision: 'OpenAI GPT-4o Vision',
     directeur: 'OpenAI GPT-4o-mini',
     scenariste: 'OpenAI GPT-4o-mini (AIDA 3 scènes)',
-    images: 'gpt-image-1',
-    video: 'OpenAI Sora (personne + produit)',
-    voix: 'OpenAI TTS HD (voix adaptée au genre)',
-    montage: 'FFmpeg (vidéo + voix off)'
-  }
+    animation: 'FFmpeg Ken Burns (zoom/pan + texte overlay)',
+    voix: 'ElevenLabs / OpenAI TTS HD',
+    montage: 'FFmpeg (concat + voix off)'
+  },
+  cout_par_video: '~$0.10 (vs $1.60 avec Sora)'
 }));
 
 app.listen(PORT, async () => {
   console.log('');
   console.log('  ╔══════════════════════════════════════════╗');
-  console.log('  ║   STUDIO PUB IA — WANRE AI SOLUTIONS     ║');
-  console.log('  ║   Sora + TTS + FFmpeg                     ║');
+  console.log('  ║   STUDIO PUB IA v2 — WANRE AI SOLUTIONS  ║');
+  console.log('  ║   Photo animée + Voix pro (~$0.10/vid)    ║');
   console.log('  ╠══════════════════════════════════════════╣');
   console.log('  ║  👁️ Vision IA      → GPT-4o Vision        ║');
-  console.log('  ║  1. Directeur IA   → OpenAI GPT           ║');
+  console.log('  ║  1. Directeur IA   → GPT-4o-mini          ║');
   console.log('  ║  2. Scénariste IA  → AIDA 3 scènes        ║');
-  console.log('  ║  3. Créateur Images→ gpt-image-1          ║');
-  console.log('  ║  4. Vidéaste IA    → Sora (personne+prod) ║');
-  console.log('  ║  5. Voix IA        → TTS HD (♀/♂)         ║');
+  console.log('  ║  4. Animateur IA   → FFmpeg Ken Burns      ║');
+  console.log('  ║  5. Voix IA        → ElevenLabs / TTS HD  ║');
   console.log('  ║  6. Monteur IA     → FFmpeg                ║');
   console.log('  ╚══════════════════════════════════════════╝');
   console.log('');
